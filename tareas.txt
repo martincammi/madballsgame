@@ -1,0 +1,25 @@
+
+PENDIENTE
+Codificar el turno Jugador.
+Terminar de codificar el resto de las Madballs
+Reinterpretar las madballs con habilidades para hacerlo más genérico
+Dividir las zonas (zonaJuego es una sola, pero Zona descarte son dos)
+Refactorizar Zona para que el llamado sea más fácil.
+Armar la parte de UI
+Levantar Proyecto UI/backend.
+
+LISTO
+Refactorizar Contadores para que sea más fácil su uso. LISTO
+
+
+Etapas:
+1) Terminar modelado del juego
+2) Terminar de diseñar las cartas.
+3) Hacer corridas de prueba para evaluar mazo
+4) Integración con la parte visual
+5) Impresión y testeo en vivo
+6) Diseño de cartas
+7) Diseño de reglas
+8) Diseño de caja
+9) Impresión Real (Dos copias)
+10) Diseño alternativo.
