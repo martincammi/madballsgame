@@ -1,10 +1,10 @@
 package estados;
 
 import antimadball.Antimadball;
-import antimadball.DestruccionTotal;
+import antimadball.CerrarPuertas;
+import antimadball.GranRedCapturadora;
 import estrategia.JugadorEstrategia;
 import madballs.Carta;
-import madballs.MadballEnJuego;
 import playground.JuegoMadball;
 import soporte.Mazo;
 import soporte.StringUtils;
@@ -23,7 +23,8 @@ public class TurnoJugador extends Turno {
     }
 
     private void armarMazo() {
-        mazoJugador.push(new DestruccionTotal());
+        mazoJugador.push(new GranRedCapturadora());
+        mazoJugador.push(new CerrarPuertas());
     }
 
     @Override
@@ -34,6 +35,10 @@ public class TurnoJugador extends Turno {
     @Override
     public void iniciar(JuegoMadball juego) throws Exception {
         System.out.println(" - Juega el Jugador");
+
+        for (Antimadball antimadball: juego.cartasEnEsperaJugador()){
+            antimadball.inicioTurno(juego);
+        }
 
         //1) Roba carta
         Carta antimadball = juego.robarJugador();
@@ -59,7 +64,6 @@ public class TurnoJugador extends Turno {
     }
 
     public Antimadball robar(){
-
         return (Antimadball) mazoJugador.robar();
     }
 
@@ -72,6 +76,10 @@ public class TurnoJugador extends Turno {
         mazoJugador.addAll(antiMadballs);
     }
 
+    public void ponerCartaAlTope(Carta carta) {
+        mazoJugador.push(carta);
+    }
+
     @Override
     public void mezclar() {
         mazoJugador.mezclar();
@@ -79,6 +87,10 @@ public class TurnoJugador extends Turno {
 
     public Set getCartas(){
         return new HashSet(mano);
+    }
+
+    public void removerCarta(Antimadball antimadball){
+        mano.remove(antimadball);
     }
 
 }

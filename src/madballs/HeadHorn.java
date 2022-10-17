@@ -2,7 +2,6 @@ package madballs;
 
 import estrategia.MadballEstrategia;
 import playground.JuegoMadball;
-import soporte.ContadorLocura;
 
 public class HeadHorn extends Madball {
 
@@ -15,7 +14,7 @@ public class HeadHorn extends Madball {
         MadballEstrategia estrategia = juego.getMadballsEstrategia();
         try{
             MadballEnJuego madballEnJuego = estrategia.cartaEnEspera(juego);
-            juego.ponerEnJuego(madballEnJuego);
+            juego.jugar(madballEnJuego);
         }catch (Exception e){
             System.out.println("No hay cartas en espera, la regla queda sin uso.");
         }

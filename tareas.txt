@@ -1,6 +1,7 @@
 
 PENDIENTE
-Codificar el turno Jugador.
+
+Codificar un algoritmo hormiga que pruebe agregando cartas al mazo de Jugador para que logre un buen porcentaje de éxito (50%) probar lo mismo variando las estrategias.
 Terminar de codificar el resto de las Madballs
 Reinterpretar las madballs con habilidades para hacerlo más genérico
 Dividir las zonas (zonaJuego es una sola, pero Zona descarte son dos)
@@ -10,9 +11,13 @@ Levantar Proyecto UI/backend.
 
 LISTO
 Refactorizar Contadores para que sea más fácil su uso. LISTO
+Codificar el turno Jugador. LISTO
 
 Mejoras
 Que todas las cartas sean de tipo Madballs
+Quizás las cartas no deberían moverse de su zona hasta que se valide que pueden hacerlo. Ejemplo: cuando se roba una carta y no se puede jugar
+se vuelve al tope del mazo.
+Quizás ponerEnJuego y Jugar deberían ser métodos privados y desde fuera invocar a moverZona1Zona2 y de allí validar si eso puede ocurrir, para poder prevenir cualquier movimiento que, si no es válido haya que volver atrás (como carta al tope del mazo)
 
 Etapas:
 1) Terminar modelado del juego

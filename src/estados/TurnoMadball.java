@@ -39,26 +39,34 @@ public class TurnoMadball extends Turno {
         System.out.println(" - Juegan las Madball");
 
         //1) Remover contadores de locura de las cartas en la zona de juego.
-        Integer contadoresLocuraRemovidos = new Long(juego.cartasEnZona(ZonaMadballJuego.getInstance()).stream().filter(m -> m.tieneContadorLocura())
+        Integer contadoresLocuraRemovidos = new Long(juego.cartasEnJuego().stream().filter(m -> m.tieneContadorLocura())
                             .peek(m -> m.restarContadorLocura()).count()).intValue();
-        System.out.println("Removiendo " + contadoresLocuraRemovidos + StringUtils.plural(contadoresLocuraRemovidos, " contador", "es"));
+        System.out.println("Removiendo " + contadoresLocuraRemovidos + StringUtils.plural(contadoresLocuraRemovidos, " contador", "es") + " de locura" );
         StringUtils.time();
 
         //2) Madballs ganan puntos de locura.
+        //System.out.println("- Calculando puntos de locura");
         juego.sumarPuntosLocura(contadoresLocuraRemovidos);
         StringUtils.time();
 
         //3) Remover contadores de espera de las cartas en la zona de espera.
-        juego.cartasEnZona(ZonaMadballEspera.getInstance()).forEach(m -> m.restarContadorEspera());
+        //System.out.println("- Removiendo contadores de espera");
+        //juego.cartasEnZona(ZonaMadballEspera.getInstance()).forEach(m -> m.restarContadorEspera());
+        Integer contadoresEsperaRemovidos = new Long(juego.cartasEnEspera().stream().filter(m -> m.tieneContadorEspera())
+                .peek(m -> m.restarContadorEspera()).count()).intValue();
+        System.out.println("Removiendo " + contadoresEsperaRemovidos + StringUtils.plural(contadoresEsperaRemovidos, " contador", "es") + " de espera" );
+
         StringUtils.time();
 
         //4) y 5) Poner cartas con cero contadores de espera de la zona de espera en la zona de juego.
-        for(MadballEnJuego madballEnJuego: juego.cartasEnJuego().stream().filter(m -> m.getContadorEspera().equals(0)).collect(Collectors.toList())) {
-            juego.ponerEnJuego(madballEnJuego);
+        //System.out.println("- Poniendo cartas de espera en juego");
+        for(MadballEnJuego madballEnJuego: juego.cartasEnEspera().stream().filter(m -> m.getContadorEspera().equals(0)).collect(Collectors.toList())) {
+            juego.moverEsperaJuego(madballEnJuego);
         }
         StringUtils.time();
 
         //6) Habilidades de cartas por inicio de turno
+        //System.out.println("- Habilidades por inicio de turno");
         for(MadballEnJuego madballEnJuego: juego.cartasEnJuego()){
             madballEnJuego.inicioTurno(juego);
         }
@@ -67,7 +75,7 @@ public class TurnoMadball extends Turno {
         //7) Robar madball del mazo
         Madball madball = juego.robarMadball();
         if(madball != null){
-            juego.ponerEnJuego(madball);
+            juego.jugar(madball);
         }
         StringUtils.time();
 
@@ -90,6 +98,11 @@ public class TurnoMadball extends Turno {
 
     public Madball robar(){
         return (Madball) mazoMadball.robar();
+    }
+
+    public void ponerCartaAlTope(Carta carta) {
+        System.out.println(carta.getNombre() + " va al tope del mazo");
+        mazoMadball.push(carta);
     }
 
     public boolean mazoVacio(){

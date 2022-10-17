@@ -1,6 +1,5 @@
 package madballs;
 
-import estrategia.MadballEstrategia;
 import playground.JuegoMadball;
 
 public class Oculus extends Madball {
@@ -15,7 +14,7 @@ public class Oculus extends Madball {
         Madball madball = juego.robarMadball();
         if(madball != null){
             System.out.println("Revela " + madball.getNombre());
-            juego.ponerEnJuego(madball);
+            juego.jugar(madball);
         }
     }
 }

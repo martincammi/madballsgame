@@ -14,7 +14,7 @@ public class Calavera extends Madball {
         MadballEstrategia estrategia = juego.getMadballsEstrategia();
         try{
             MadballEnJuego madballEnJuego = estrategia.cartaDelDescarte(juego);
-            juego.ponerEnJuego(madballEnJuego);
+            juego.jugar(madballEnJuego);
         }catch (Exception e){
             System.out.println("No hay cartas en el descarte, la regla queda sin uso.");
         }

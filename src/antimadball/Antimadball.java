@@ -7,15 +7,15 @@ public abstract class Antimadball implements Carta {
 
     private String nombre;
 
+    public String getNombre(){
+        return this.getClass().getSimpleName();
+    }
+
     //Sólo para cumplir con MadballEnJuego
     public Antimadball(){}
 
     public Antimadball(String nombre){
         this.nombre = nombre;
-    }
-
-    public String getNombre() {
-        return nombre;
     }
 
     @Override
@@ -35,7 +35,7 @@ public abstract class Antimadball implements Carta {
 
     }
 
-    public void madballEntraEnJuego(){
+    public void madballEntraEnJuego() throws Exception {
 
     }
 }

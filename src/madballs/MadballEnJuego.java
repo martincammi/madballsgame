@@ -46,7 +46,7 @@ public class MadballEnJuego implements Carta {
         madball.entraEnJuego(juego);
     }
 
-    public void entraEnEspera(JuegoMadball juego){ madball.entraEnJuego(juego); }
+    public void entraEnEspera(JuegoMadball juego){ madball.entraEnEspera(juego); }
 
     public void finalTurno(JuegoMadball juego){ madball.finalTurno(juego); }
 

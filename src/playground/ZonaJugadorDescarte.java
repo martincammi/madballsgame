@@ -1,28 +1,26 @@
 package playground;
 
 import antimadball.Antimadball;
-import madballs.Carta;
 import madballs.MadballEnJuego;
 
 import java.util.HashSet;
 import java.util.Set;
 
-public class ZonaDescarteJugador {
+public class ZonaJugadorDescarte {
 
-    private static ZonaDescarteJugador zonaDescarte;
+    private static ZonaJugadorDescarte zonaDescarte;
     protected Set<Antimadball> antimadballs = new HashSet<>();
 
-    void ponerCarta(Antimadball antimadball, JuegoMadball juego) throws Exception {
-        System.out.println("Poniendo en Juego " + antimadball.getNombre());
+    void ponerCarta(Antimadball antimadball, JuegoMadball juego) {
+        System.out.println("Descartando " + antimadball.getNombre());
         antimadballs.add(antimadball);
-        antimadball.entraEnJuego(juego);
     }
 
-    private ZonaDescarteJugador(){ }
+    private ZonaJugadorDescarte(){ }
 
-    public static ZonaDescarteJugador getInstance(){
+    public static ZonaJugadorDescarte getInstance(){
         if(zonaDescarte == null){
-            zonaDescarte = new ZonaDescarteJugador();
+            zonaDescarte = new ZonaJugadorDescarte();
         }
         return zonaDescarte;
     }
@@ -33,5 +31,9 @@ public class ZonaDescarteJugador {
 
     public Set<Antimadball> getCartas(){
         return new HashSet<Antimadball>(antimadballs);
+    }
+
+    public void remover(Antimadball antimadball){
+        antimadballs.remove(antimadball);
     }
 }
