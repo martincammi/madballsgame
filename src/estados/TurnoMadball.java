@@ -101,7 +101,7 @@ public class TurnoMadball extends Turno {
     }
 
     public void ponerCartas(Set<MadballEnJuego> madballs) {
-        mazoMadball.addAll(madballs);
+        mazoMadball.addAll(madballs.stream().map(madball -> madball.getMadball()).collect(Collectors.toList()));
     }
 
     @Override

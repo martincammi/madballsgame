@@ -7,7 +7,6 @@ import estados.TurnoJugador;
 import estados.TurnoMadball;
 import estrategia.JugadorEstrategia;
 import estrategia.MadballEstrategia;
-import madballs.Carta;
 import madballs.Madball;
 import madballs.MadballEnJuego;
 
@@ -28,9 +27,9 @@ public class JuegoMadball {
     private MadballEstrategia madballEstrategia = new MadballEstrategia();
     private JugadorEstrategia jugadorEstrategia = new JugadorEstrategia();
     private Integer PUNTOS_LOCURA_PARA_GANAR = 10;
-    private Integer PUNTOS_DESTRUCCION_PARA_GANAR = 10;
+    private Integer PUNTOS_CAPTURA_PARA_GANAR = 10;
     private Integer puntosLocura = 0;
-    private Integer puntosDestruccion = 0;
+    private Integer puntosCaptura = 0;
 
     public JuegoMadball(){
         turno = EstadoTurno.getInstance(this);
@@ -44,7 +43,7 @@ public class JuegoMadball {
 
     public void iniciarJuego() {
         try{
-            turno.iniciar(15);
+            turno.iniciar(20);
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
@@ -56,7 +55,7 @@ public class JuegoMadball {
         }else{
             if(!cartasEnDescarte().isEmpty()){
                 System.out.println("Mezclando pila descarte en mazo");
-                El problema está que en la zona de Descarte debería haber madballs no madballsEnJuego
+                //El problema está que en la zona de Descarte debería haber madballs no madballsEnJuego
                 turnoMadball.ponerCartas(cartasEnDescarte());
                 turnoMadball.mezclar();
                 ZonaDescarteMadballs.getInstance().vaciarZona();
@@ -171,20 +170,20 @@ public class JuegoMadball {
         return puntosLocura;
     }
 
-    public void sumarPuntosDestruccion(Integer puntosDestruccion) throws Exception {
-        agregarPuntosDestruccion(puntosDestruccion);
-        System.out.println("El Jugador tiene " + getPuntosLocura() + " punto" + (puntosDestruccion != 1? "s": "") + " de destrucción");
-        if(getPuntosDestruccion() >= PUNTOS_DESTRUCCION_PARA_GANAR ){
+    public void sumarPuntosCaptura(Integer puntosCaptura) throws Exception {
+        agregarPuntosCaptura(puntosCaptura);
+        System.out.println("El Jugador tiene " + getPuntosLocura() + " punto" + (puntosCaptura != 1? "s": "") + " de captura");
+        if(getPuntosCaptura() >= PUNTOS_CAPTURA_PARA_GANAR){
             throw new Exception("Jugador Gana");
         }
     }
 
-    public void agregarPuntosDestruccion(Integer puntosDestruccion){
-        this.puntosDestruccion = this.puntosDestruccion + puntosDestruccion;
+    public void agregarPuntosCaptura(Integer puntosCaptura){
+        this.puntosCaptura = this.puntosCaptura + puntosCaptura;
     }
 
-    public Integer getPuntosDestruccion(){
-        return puntosDestruccion;
+    public Integer getPuntosCaptura(){
+        return puntosCaptura;
     }
 
     public void removerMadballZona(MadballEnJuego madballEnJuego, ZonaMadball zonaMadball){

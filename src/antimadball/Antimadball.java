@@ -34,4 +34,8 @@ public abstract class Antimadball implements Carta {
     public void finalTurno(JuegoMadball juego) {
 
     }
+
+    public void madballEntraEnJuego(){
+
+    }
 }

@@ -11,6 +11,8 @@ Levantar Proyecto UI/backend.
 LISTO
 Refactorizar Contadores para que sea más fácil su uso. LISTO
 
+Mejoras
+Que todas las cartas sean de tipo Madballs
 
 Etapas:
 1) Terminar modelado del juego

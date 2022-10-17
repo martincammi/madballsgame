@@ -14,7 +14,7 @@ public class DestruccionTotal extends Antimadball {
     public void entraEnJuego(JuegoMadball juego) throws Exception {
         Integer madballsEnJuego = juego.madballsEnJuego();
         juego.destruirMadballs();
-        juego.sumarPuntosDestruccion(madballsEnJuego);
+        juego.sumarPuntosCaptura(madballsEnJuego);
         juego.sumarPuntosLocura(madballsEnJuego);
     }
 }
