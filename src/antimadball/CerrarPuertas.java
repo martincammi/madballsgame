@@ -1,7 +1,6 @@
 package antimadball;
 
-import Exceptions.CantDoThatException;
-import madballs.Carta;
+import exceptions.CantDoThatException;
 import playground.JuegoMadball;
 
 /**

@@ -1,6 +1,6 @@
 package playground;
 
-import Exceptions.CantDoThatException;
+import exceptions.CantDoThatException;
 import antimadball.Antimadball;
 import estados.EstadoTurno;
 import estados.Turno;
@@ -8,6 +8,7 @@ import estados.TurnoJugador;
 import estados.TurnoMadball;
 import estrategia.JugadorEstrategia;
 import estrategia.MadballEstrategia;
+import exceptions.GanadorException;
 import madballs.Madball;
 import madballs.MadballEnJuego;
 import soporte.StringUtils;
@@ -45,13 +46,16 @@ public class JuegoMadball {
         zonaJugadorEspera = ZonaJugadorEspera.getInstance();
     }
 
-    public void iniciarJuego() {
+    public String iniciarJuego() throws Exception {
         try{
             turno.iniciar(20);
             System.out.println("--- EMPATE, nadie ganó el juego ---");
-        }catch (Exception e){
+            return "EMPATE";
+        }catch (GanadorException e){
             System.out.println(e.getMessage());
+            return e.getGanador();
         }
+
     }
 
     public Madball robarMadball(){
@@ -204,7 +208,7 @@ public class JuegoMadball {
         agregarPuntosLocura(puntosLocura);
         System.out.println("Las Madballs tienen " + getPuntosLocura() + " punto" + (puntosLocura != 1? "s": "") + " de locura");
         if(getPuntosLocura() >= PUNTOS_LOCURA_PARA_GANAR ){
-            throw new Exception("--- MADBALLS GANAN ---");
+            throw new GanadorException("--- MADBALLS GANAN ---", "MADBALLS");
         }
     }
 
@@ -220,7 +224,7 @@ public class JuegoMadball {
         agregarPuntosCaptura(puntosCaptura);
         System.out.println("El Jugador tiene " + getPuntosCaptura() + " punto" + (puntosCaptura != 1? "s": "") + " de captura");
         if(getPuntosCaptura() >= PUNTOS_CAPTURA_PARA_GANAR){
-            throw new Exception("--- EL JUGADOR GANA ---");
+            throw new GanadorException("--- EL JUGADOR GANA ---", "JUGADOR");
         }
     }
 

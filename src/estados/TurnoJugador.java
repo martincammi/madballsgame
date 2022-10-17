@@ -25,6 +25,8 @@ public class TurnoJugador extends Turno {
     private void armarMazo() {
         mazoJugador.push(new GranRedCapturadora());
         mazoJugador.push(new CerrarPuertas());
+        mazoJugador.push(new GranRedCapturadora());
+        mazoJugador.push(new GranRedCapturadora());
     }
 
     @Override
