@@ -8,7 +8,6 @@ import java.util.Set;
 
 public class ZonaJugadorDescarte {
 
-    private static ZonaJugadorDescarte zonaDescarte;
     protected Set<Antimadball> antimadballs = new HashSet<>();
 
     void ponerCarta(Antimadball antimadball, JuegoMadball juego) {
@@ -16,14 +15,7 @@ public class ZonaJugadorDescarte {
         antimadballs.add(antimadball);
     }
 
-    private ZonaJugadorDescarte(){ }
-
-    public static ZonaJugadorDescarte getInstance(){
-        if(zonaDescarte == null){
-            zonaDescarte = new ZonaJugadorDescarte();
-        }
-        return zonaDescarte;
-    }
+    public ZonaJugadorDescarte(){ }
 
     public void vaciarZona(){
         antimadballs.clear();

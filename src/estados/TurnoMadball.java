@@ -1,20 +1,21 @@
 package estados;
 
+import exceptions.CantDoThatException;
 import madballs.*;
 import playground.JuegoMadball;
 import playground.ZonaMadballEspera;
 import playground.ZonaMadballJuego;
 import soporte.*;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 public class TurnoMadball extends Turno {
 
-    private static TurnoMadball turnoMadball;
     private Mazo mazoMadball = new Mazo();
 
-    private TurnoMadball(){
+    public TurnoMadball(){
         armarMazo();
     }
 
@@ -39,8 +40,16 @@ public class TurnoMadball extends Turno {
         System.out.println(" - Juegan las Madball");
 
         //1) Remover contadores de locura de las cartas en la zona de juego.
-        Integer contadoresLocuraRemovidos = new Long(juego.cartasEnJuego().stream().filter(m -> m.tieneContadorLocura())
-                            .peek(m -> m.restarContadorLocura()).count()).intValue();
+        Integer contadoresLocuraRemovidos = 0;
+        List<MadballEnJuego> cartasConContadoresLocura = (juego.cartasEnJuego().stream().filter(m -> m.tieneContadorLocura()).collect(Collectors.toList()));
+        for(MadballEnJuego madballEnJuego: cartasConContadoresLocura){
+            try{
+                juego.removerContadorLocura(madballEnJuego);
+                contadoresLocuraRemovidos++;
+            }catch(CantDoThatException e){
+                System.out.println(madballEnJuego.getNombre() + " " + e.getMessage() + " porque " + e.getNombreCarta() + " no lo permite");
+            }
+        }
         System.out.println("Removiendo " + contadoresLocuraRemovidos + StringUtils.plural(contadoresLocuraRemovidos, " contador", "es") + " de locura" );
         StringUtils.time();
 
@@ -51,7 +60,6 @@ public class TurnoMadball extends Turno {
 
         //3) Remover contadores de espera de las cartas en la zona de espera.
         //System.out.println("- Removiendo contadores de espera");
-        //juego.cartasEnZona(ZonaMadballEspera.getInstance()).forEach(m -> m.restarContadorEspera());
         Integer contadoresEsperaRemovidos = new Long(juego.cartasEnEspera().stream().filter(m -> m.tieneContadorEspera())
                 .peek(m -> m.restarContadorEspera()).count()).intValue();
         System.out.println("Removiendo " + contadoresEsperaRemovidos + StringUtils.plural(contadoresEsperaRemovidos, " contador", "es") + " de espera" );
@@ -80,20 +88,13 @@ public class TurnoMadball extends Turno {
         StringUtils.time();
 
         //8) Habilidades de cartas por fin de turno
-        juego.cartasEnZona(ZonaMadballJuego.getInstance()).stream().forEach(m -> m.finalTurno(juego));
+        juego.cartasEnJuego().stream().forEach(m -> m.finalTurno(juego));
         StringUtils.time();
 
         //9) Pasa el turno al Jugador.
         //No se hace nada, sólo el método termina.
 
         estadoDelJuego(juego);
-    }
-
-    public static TurnoMadball getInstance(){
-        if(turnoMadball == null){
-            turnoMadball = new TurnoMadball();
-        }
-        return turnoMadball;
     }
 
     public Madball robar(){

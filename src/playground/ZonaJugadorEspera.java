@@ -7,7 +7,6 @@ import java.util.Set;
 
 public class ZonaJugadorEspera {
 
-    private static ZonaJugadorEspera zonaEspera;
     protected Set<Antimadball> antimadballs = new HashSet<>();
 
     void ponerCarta(Antimadball antimadball, JuegoMadball juego) throws Exception {
@@ -16,14 +15,7 @@ public class ZonaJugadorEspera {
         antimadball.entraEnEspera(juego);
     }
 
-    private ZonaJugadorEspera(){ }
-
-    public static ZonaJugadorEspera getInstance(){
-        if(zonaEspera == null){
-            zonaEspera = new ZonaJugadorEspera();
-        }
-        return zonaEspera;
-    }
+    public ZonaJugadorEspera(){ }
 
     public void vaciarZona(){
         antimadballs.clear();

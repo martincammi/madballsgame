@@ -17,7 +17,7 @@ public class MadballEstrategia {
      * @param juego
      */
     public void ponerContadorLocura(Integer contadorlocura, JuegoMadball juego){
-        Set<MadballEnJuego> madballsEnJuego = juego.cartasEnZona(ZonaMadballJuego.getInstance());
+        Set<MadballEnJuego> madballsEnJuego = juego.cartasEnJuego();
         if(!madballsEnJuego.isEmpty()){
             MadballEnJuego madballEnJuego = madballsEnJuego.stream()
                                                 .filter(m ->  m.getContadorLocura().equals(0))
@@ -32,14 +32,14 @@ public class MadballEstrategia {
      * @param juego
      */
     public MadballEnJuego cartaDelDescarte(JuegoMadball juego) {
-        Set<MadballEnJuego> madballsEnJuego = juego.cartasEnZona(ZonaDescarteMadballs.getInstance());
+        Set<MadballEnJuego> madballsEnJuego = juego.cartasEnDescarte();
         return madballsEnJuego.stream().findFirst().get();
     }
 
     public MadballEnJuego cartaEnEspera(JuegoMadball juego) {
-        Set<MadballEnJuego> madballsEnJuego = juego.cartasEnZona(ZonaMadballEspera.getInstance());
+        Set<MadballEnJuego> madballsEnJuego = juego.cartasEnEspera();
         MadballEnJuego madballEnJuego = madballsEnJuego.stream().findFirst().get();
-        juego.removerMadballZona(madballEnJuego, ZonaMadballEspera.getInstance());
+        juego.removerCartaEspera(madballEnJuego);
         return madballEnJuego;
     }
 }

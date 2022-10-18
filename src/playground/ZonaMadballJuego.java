@@ -14,13 +14,8 @@ public class ZonaMadballJuego extends ZonaMadball {
         madball.entraEnJuego(juego);
     }
 
-    private ZonaMadballJuego(){ }
-
-    public static ZonaMadball getInstance(){
-        if(zonaJuego == null){
-            zonaJuego = new ZonaMadballJuego();
-        }
-        return zonaJuego;
+    public ZonaMadballJuego(){
     }
+
 
 }

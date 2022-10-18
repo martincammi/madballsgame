@@ -28,7 +28,7 @@ public abstract class Turno {
         }
 
         System.out.print("ZonaMadball Espera: ");
-        for(MadballEnJuego madballEnJuego : juego.cartasEnZona(ZonaMadballEspera.getInstance())){
+        for(MadballEnJuego madballEnJuego : juego.cartasEnEspera()){
             System.out.print(madballEnJuego.getNombre() + " (" + madballEnJuego.getContadorEspera() + "," + madballEnJuego.getCosto() + ") ");
         }
 

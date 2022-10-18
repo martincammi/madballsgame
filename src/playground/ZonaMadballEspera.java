@@ -13,13 +13,7 @@ public class ZonaMadballEspera extends ZonaMadball {
 
     }
 
-    private ZonaMadballEspera(){ }
+    public ZonaMadballEspera(){ }
 
-    public static ZonaMadball getInstance(){
-        if(zonaEspera == null){
-            zonaEspera = new ZonaMadballEspera();
-        }
-        return zonaEspera;
-    }
 
 }

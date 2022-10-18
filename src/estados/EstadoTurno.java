@@ -7,20 +7,15 @@ import java.util.List;
 
 public class EstadoTurno {
 
-    private static EstadoTurno estadoTurno;
     private Turno turnoActual;
     private List<Turno> turnos = new ArrayList<>();
     private JuegoMadball juego;
 
-    public static EstadoTurno getInstance(JuegoMadball juegoMadball){
-        if(estadoTurno == null){
-            estadoTurno = new EstadoTurno();
-            estadoTurno.turnos.add(TurnoMadball.getInstance());
-            estadoTurno.turnos.add(TurnoJugador.getInstance());
-            estadoTurno.turnoActual = estadoTurno.turnos.get(0);
-            estadoTurno.juego = juegoMadball;
-        }
-        return estadoTurno;
+    public EstadoTurno (JuegoMadball juegoMadball){
+        turnos.add(new TurnoMadball());
+        turnos.add(new TurnoJugador());
+        turnoActual = turnos.get(0);
+        juego = juegoMadball;
     }
 
     public void iniciar(Integer turnos) throws Exception {

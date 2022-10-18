@@ -36,19 +36,19 @@ public class JuegoMadball {
     private Integer puntosCaptura = 0;
 
     public JuegoMadball(){
-        turno = EstadoTurno.getInstance(this);
-        turnoMadball = TurnoMadball.getInstance();
-        turnoJugador = TurnoJugador.getInstance();
-        zonaMadballJuego =  ZonaMadballJuego.getInstance();
-        zonaMadballEspera = ZonaMadballEspera.getInstance();
-        zonaMadballDescarte = ZonaDescarteMadballs.getInstance();
-        zonaJugadorDescarte = ZonaJugadorDescarte.getInstance();
-        zonaJugadorEspera = ZonaJugadorEspera.getInstance();
+        turno = new EstadoTurno(this);
+        turnoMadball = new TurnoMadball();
+        turnoJugador = new TurnoJugador();
+        zonaMadballJuego =  new ZonaMadballJuego();
+        zonaMadballEspera = new ZonaMadballEspera();
+        zonaMadballDescarte =  new ZonaDescarteMadballs();
+        zonaJugadorDescarte =  new ZonaJugadorDescarte();
+        zonaJugadorEspera =  new ZonaJugadorEspera();
     }
 
     public String iniciarJuego() throws Exception {
         try{
-            turno.iniciar(20);
+            turno.iniciar(100);
             System.out.println("--- EMPATE, nadie ganó el juego ---");
             return "EMPATE";
         }catch (GanadorException e){
@@ -67,7 +67,7 @@ public class JuegoMadball {
                 //El problema está que en la zona de Descarte debería haber madballs no madballsEnJuego
                 turnoMadball.ponerCartas(cartasEnDescarte());
                 turnoMadball.mezclar();
-                ZonaDescarteMadballs.getInstance().vaciarZona();
+                zonaMadballDescarte.vaciarZona();
                 return turnoMadball.robar();
             }else{
                 System.out.println("No hay más cartas para robar");
@@ -85,7 +85,7 @@ public class JuegoMadball {
                 System.out.println("Mezclando pila descarte en mazo");
                 turnoJugador.ponerCartas(cartasEnDescarteJugador());
                 turnoJugador.mezclar();
-                ZonaJugadorDescarte.getInstance().vaciarZona();
+                zonaJugadorDescarte.vaciarZona();
                 return turnoJugador.robar();
             }else{
                 System.out.println("No hay más cartas para robar");
@@ -119,8 +119,21 @@ public class JuegoMadball {
     public void ponerEnJuego(Madball madball) throws Exception {
         avisarEntraMadballEnJuego();
         MadballEnJuego madballEnJuego = MadballEnJuego.getInstance(madball);
-        madballEnJuego.sumarContadorLocura(madball.getLocura());
+        ponerContadorLocura(madballEnJuego,madball.getLocura());
         zonaMadballJuego.ponerCarta( madballEnJuego, this);
+    }
+
+    public void ponerContadorLocura(MadballEnJuego madballEnJuego, Integer contadorLocura){
+        madballEnJuego.sumarContadorLocura(contadorLocura);
+    }
+
+    public void removerContadorLocura(MadballEnJuego madballEnJuego, Integer contadorLocura) throws Exception {
+        avisarRemoverContador();
+        madballEnJuego.restarContadorLocura(contadorLocura);
+    }
+
+    public void removerContadorLocura(MadballEnJuego madballEnJuego) throws Exception {
+        removerContadorLocura(madballEnJuego,1);
     }
 
     /**
@@ -159,6 +172,15 @@ public class JuegoMadball {
         }
     }
 
+    public void avisarPonerContador() throws Exception {
+    }
+
+    public void avisarRemoverContador() throws Exception{
+        for (Antimadball antimadball: cartasEnEsperaJugador()){
+            antimadball.madballQuitarContador();
+        }
+    }
+
     /**
      * Cuenta cantidad de Madballs en juego
      * @return un número que indica la cantidad de Madballs en juego.
@@ -177,23 +199,23 @@ public class JuegoMadball {
     }
 
     public Set<MadballEnJuego> cartasEnJuego(){
-        return (Set) ZonaMadballJuego.getInstance().getCartas();
+        return (Set) zonaMadballJuego.getCartas();
     }
 
     public Set<MadballEnJuego> cartasEnEspera(){
-        return (Set) ZonaMadballEspera.getInstance().getCartas();
+        return (Set) zonaMadballEspera.getCartas();
     }
 
     public Set<MadballEnJuego> cartasEnDescarte(){
-        return (Set) ZonaDescarteMadballs.getInstance().getCartas();
+        return (Set) zonaMadballDescarte.getCartas();
     }
 
     public Set<Antimadball> cartasEnDescarteJugador(){
-        return (Set) ZonaJugadorDescarte.getInstance().getCartas();
+        return (Set) zonaJugadorDescarte.getCartas();
     }
 
     public Set<Antimadball> cartasEnEsperaJugador(){
-        return (Set) ZonaJugadorEspera.getInstance().getCartas();
+        return (Set) zonaJugadorEspera.getCartas();
     }
 
     public MadballEstrategia getMadballsEstrategia(){
@@ -236,10 +258,6 @@ public class JuegoMadball {
         return puntosCaptura;
     }
 
-    public void removerMadballZona(MadballEnJuego madballEnJuego, ZonaMadball zonaMadball){
-        zonaMadball.remover(madballEnJuego);
-    }
-
     public void destruirMadballs(){
         Set<MadballEnJuego> madballsEnJuego = cartasEnJuego();
         System.out.println(madballsEnJuego.size() + " " + StringUtils.plural(madballsEnJuego.size(),"Madball","s") + StringUtils.plural(madballsEnJuego.size()," capturada","s"));
@@ -277,5 +295,10 @@ public class JuegoMadball {
         }catch(CantDoThatException e){
             System.out.println(madballEnJuego.getNombre() + " no se puede jugar porque " + e.getNombreCarta() + " no lo permite");
         }
+    }
+
+    public void moverEsperaDescarte(Antimadball antimadball) throws Exception {
+        removerCartaEspera(antimadball);
+        ponerEnDescarte(antimadball);
     }
 }

@@ -2,6 +2,7 @@ package estados;
 
 import antimadball.Antimadball;
 import antimadball.CerrarPuertas;
+import antimadball.FrioParalizador;
 import antimadball.GranRedCapturadora;
 import estrategia.JugadorEstrategia;
 import madballs.Carta;
@@ -14,19 +15,23 @@ import java.util.Set;
 
 public class TurnoJugador extends Turno {
 
-    private static TurnoJugador turnoJugador;
     private Mazo mazoJugador = new Mazo();
     private Set mano = new HashSet();
 
-    private TurnoJugador(){
+    public TurnoJugador(){
         armarMazo();
     }
 
     private void armarMazo() {
         mazoJugador.push(new GranRedCapturadora());
         mazoJugador.push(new CerrarPuertas());
+        mazoJugador.push(new FrioParalizador());
         mazoJugador.push(new GranRedCapturadora());
+        mazoJugador.push(new CerrarPuertas());
+        mazoJugador.push(new FrioParalizador());
         mazoJugador.push(new GranRedCapturadora());
+        mazoJugador.push(new CerrarPuertas());
+        mazoJugador.push(new FrioParalizador());
     }
 
     @Override
@@ -56,13 +61,6 @@ public class TurnoJugador extends Turno {
         //3) Pasa el turno a las Madballs
 
         estadoDelJuego(juego);
-    }
-
-    public static TurnoJugador getInstance(){
-        if(turnoJugador == null){
-            turnoJugador = new TurnoJugador();
-        }
-        return turnoJugador;
     }
 
     public Antimadball robar(){

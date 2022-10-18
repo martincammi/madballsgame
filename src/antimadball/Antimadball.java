@@ -19,9 +19,12 @@ public abstract class Antimadball implements Carta {
     }
 
     @Override
-    public void inicioTurno(JuegoMadball juego) {
+    public void inicioTurno(JuegoMadball juego) throws Exception {
     }
 
+    /**
+     * La carta se pone en espera por tener un efecto que perdura un tiempo
+     */
     public void entraEnJuego(JuegoMadball juego) throws Exception {
     }
 
@@ -36,6 +39,10 @@ public abstract class Antimadball implements Carta {
     }
 
     public void madballEntraEnJuego() throws Exception {
+
+    }
+
+    public void madballQuitarContador() throws Exception {
 
     }
 }

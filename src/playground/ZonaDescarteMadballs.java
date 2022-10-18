@@ -12,13 +12,5 @@ public class ZonaDescarteMadballs extends ZonaMadball {
         madball.entraEnJuego(juego);
     }
 
-    private ZonaDescarteMadballs(){ }
-
-    public static ZonaDescarteMadballs getInstance(){
-        if(zonaDescarte == null){
-            zonaDescarte = new ZonaDescarteMadballs();
-        }
-        return zonaDescarte;
-    }
-
+    public ZonaDescarteMadballs(){ }
 }

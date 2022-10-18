@@ -28,6 +28,7 @@ public class CerrarPuertas extends Antimadball {
      */
     @Override
     public void inicioTurno(JuegoMadball juego) {
+        //TODO cambiar a un metodo en juego que nueva de Espera a Descarte
         juego.removerCartaEspera(this);
         juego.ponerEnDescarte(this);
     }
