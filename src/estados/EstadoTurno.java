@@ -1,5 +1,7 @@
 package estados;
 
+import antimadball.Antimadball;
+import madballs.Madball;
 import playground.JuegoMadball;
 
 import java.util.ArrayList;
@@ -36,5 +38,16 @@ public class EstadoTurno {
 
     public Turno turnoActual(){
         return turnoActual;
+    }
+
+    public void reiniciar(List<Madball> madballs, List<Antimadball> antimadballs){
+        turnoActual = turnos.get(0);
+        turnos.get(0).reiniciar(madballs);
+        turnos.get(1).reiniciar(antimadballs);
+    }
+
+    public void reiniciar(){
+        turnoActual = turnos.get(0);
+        turnos.forEach(t -> t.reiniciar());
     }
 }

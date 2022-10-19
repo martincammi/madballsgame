@@ -1,11 +1,11 @@
 package estados;
 
+import antimadball.Antimadball;
 import exceptions.CantDoThatException;
 import madballs.*;
 import playground.JuegoMadball;
-import playground.ZonaMadballEspera;
-import playground.ZonaMadballJuego;
-import soporte.*;
+import soporte.Mazo;
+import soporte.StringUtils;
 
 import java.util.List;
 import java.util.Set;
@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 public class TurnoMadball extends Turno {
 
-    private Mazo mazoMadball = new Mazo();
+    public Mazo mazoMadball = new Mazo();
 
     public TurnoMadball(){
         armarMazo();
@@ -32,6 +32,23 @@ public class TurnoMadball extends Turno {
     @Override
     public Integer getId() {
         return 0;
+    }
+
+
+    @Override
+    public void reiniciar(List<? extends Carta> madballs) {
+        vaciarMazo();
+        if(madballs.isEmpty()){
+            armarMazo();
+        }else{
+            mazoMadball.addAll(0, madballs);
+        }
+    }
+
+    @Override
+    public void reiniciar() {
+        vaciarMazo();
+        armarMazo();
     }
 
     @Override
@@ -109,6 +126,8 @@ public class TurnoMadball extends Turno {
     public boolean mazoVacio(){
         return mazoMadball.isEmpty();
     }
+
+    public void vaciarMazo(){ mazoMadball.empty();}
 
     public void mezclar(){
         mazoMadball.mezclar();

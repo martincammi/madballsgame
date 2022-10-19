@@ -11,6 +11,17 @@ public abstract class Madball implements Carta {
     protected Integer locura;
     protected Integer costo;
 
+    public static List<Madball> allMadballs(){
+        List allmadballs = new ArrayList();
+        allmadballs.add(new Calavera());
+        allmadballs.add(new HeadHorn());
+        allmadballs.add(new Medusa());
+        allmadballs.add(new Oculus());
+        allmadballs.add(new PelotaBurlona());
+
+        return allmadballs;
+    }
+
     //Sólo para cumplir con MadballEnJuego
     public Madball(){}
 

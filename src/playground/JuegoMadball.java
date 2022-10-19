@@ -13,6 +13,7 @@ import madballs.Madball;
 import madballs.MadballEnJuego;
 import soporte.StringUtils;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -21,8 +22,8 @@ import java.util.Set;
 public class JuegoMadball {
 
     private EstadoTurno turno;
-    private TurnoMadball turnoMadball;
-    private TurnoJugador turnoJugador;
+    public TurnoMadball turnoMadball;
+    public TurnoJugador turnoJugador;
     private ZonaMadball zonaMadballJuego;
     private ZonaMadball zonaMadballEspera;
     private ZonaMadball zonaMadballDescarte;
@@ -46,9 +47,35 @@ public class JuegoMadball {
         zonaJugadorEspera =  new ZonaJugadorEspera();
     }
 
+    public void reiniciar(List<Madball> madballs, List<Antimadball> antimadballs){
+        turno.reiniciar(madballs, antimadballs);
+        turnoMadball.mezclar();
+        turnoJugador.mezclar();
+        puntosLocura = 0;
+        puntosCaptura = 0;
+        zonaMadballJuego.vaciarZona();
+        zonaMadballEspera.vaciarZona();
+        zonaMadballDescarte.vaciarZona();
+        zonaJugadorDescarte.vaciarZona();
+        zonaJugadorEspera.vaciarZona();
+    }
+
+    public void reiniciar(){
+        turno.reiniciar();
+        turnoMadball.mezclar();
+        turnoJugador.mezclar();
+        puntosLocura = 0;
+        puntosCaptura = 0;
+        zonaMadballJuego.vaciarZona();
+        zonaMadballEspera.vaciarZona();
+        zonaMadballDescarte.vaciarZona();
+        zonaJugadorDescarte.vaciarZona();
+        zonaJugadorEspera.vaciarZona();
+    }
+
     public String iniciarJuego() throws Exception {
         try{
-            turno.iniciar(100);
+            turno.iniciar(30);
             System.out.println("--- EMPATE, nadie ganó el juego ---");
             return "EMPATE";
         }catch (GanadorException e){
@@ -275,6 +302,10 @@ public class JuegoMadball {
         turnoJugador.removerCarta(antimadball);
     }
 
+    public void removerCartaDescarte(MadballEnJuego madballEnJuego){
+        zonaMadballDescarte.remover(madballEnJuego);
+    }
+
     public void removerCartaDescarte(Antimadball antimadball){
         zonaJugadorDescarte.remover(antimadball);
     }
@@ -291,6 +322,16 @@ public class JuegoMadball {
         try {
             avisarEntraMadballEnJuego();
             removerCartaEspera(madballEnJuego);
+            ponerEnJuego(madballEnJuego.getMadball());
+        }catch(CantDoThatException e){
+            System.out.println(madballEnJuego.getNombre() + " no se puede jugar porque " + e.getNombreCarta() + " no lo permite");
+        }
+    }
+
+    public void moverDescarteJuego(MadballEnJuego madballEnJuego) throws Exception {
+        try {
+            avisarEntraMadballEnJuego();
+            removerCartaDescarte(madballEnJuego);
             ponerEnJuego(madballEnJuego.getMadball());
         }catch(CantDoThatException e){
             System.out.println(madballEnJuego.getNombre() + " no se puede jugar porque " + e.getNombreCarta() + " no lo permite");

@@ -2,11 +2,13 @@ package estados;
 
 import antimadball.Antimadball;
 import madballs.Carta;
+import madballs.Madball;
 import madballs.MadballEnJuego;
 import playground.JuegoMadball;
 import playground.ZonaJugadorEspera;
 import playground.ZonaMadballEspera;
 
+import java.util.List;
 import java.util.Set;
 
 public abstract class Turno {
@@ -32,11 +34,20 @@ public abstract class Turno {
             System.out.print(madballEnJuego.getNombre() + " (" + madballEnJuego.getContadorEspera() + "," + madballEnJuego.getCosto() + ") ");
         }
 
+        System.out.print("ZonaMadball Descarte: ");
+        for(MadballEnJuego madballEnJuego : juego.cartasEnDescarte()){
+            System.out.print(madballEnJuego.getNombre() + ", ");
+        }
+
         System.out.print("ZonaJugador Espera: ");
         for(Antimadball antimadball : juego.cartasEnEsperaJugador()){
             System.out.print(antimadball.getNombre());
         }
         System.out.println();
     }
+
+    public abstract void reiniciar(List<? extends Carta> cartas);
+
+    public abstract void reiniciar();
 
 }

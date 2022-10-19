@@ -1,21 +1,20 @@
 package estados;
 
-import antimadball.Antimadball;
-import antimadball.CerrarPuertas;
-import antimadball.FrioParalizador;
-import antimadball.GranRedCapturadora;
+import antimadball.*;
 import estrategia.JugadorEstrategia;
 import madballs.Carta;
+import madballs.Madball;
 import playground.JuegoMadball;
 import soporte.Mazo;
 import soporte.StringUtils;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class TurnoJugador extends Turno {
 
-    private Mazo mazoJugador = new Mazo();
+    public Mazo mazoJugador = new Mazo();
     private Set mano = new HashSet();
 
     public TurnoJugador(){
@@ -27,11 +26,12 @@ public class TurnoJugador extends Turno {
         mazoJugador.push(new CerrarPuertas());
         mazoJugador.push(new FrioParalizador());
         mazoJugador.push(new GranRedCapturadora());
-        mazoJugador.push(new CerrarPuertas());
-        mazoJugador.push(new FrioParalizador());
+        mazoJugador.push(new EntrarEnRazon());
         mazoJugador.push(new GranRedCapturadora());
         mazoJugador.push(new CerrarPuertas());
         mazoJugador.push(new FrioParalizador());
+        mazoJugador.push(new GranRedCapturadora());
+        mazoJugador.push(new EntrarEnRazon());
     }
 
     @Override
@@ -72,6 +72,8 @@ public class TurnoJugador extends Turno {
         return mazoJugador.isEmpty();
     }
 
+    public void vaciarMazo(){ mazoJugador.empty();}
+
     public void ponerCartas(Set<Antimadball> antiMadballs) {
         mazoJugador.addAll(antiMadballs);
     }
@@ -93,4 +95,21 @@ public class TurnoJugador extends Turno {
         mano.remove(antimadball);
     }
 
+    @Override
+    public void reiniciar(List<? extends Carta> antimadballs) {
+        vaciarMazo();
+        if(antimadballs.isEmpty()){
+            armarMazo();
+        }else{
+            mazoJugador.addAll(0, antimadballs);
+        }
+        mano.clear();
+    }
+
+    @Override
+    public void reiniciar() {
+        vaciarMazo();
+        armarMazo();
+        mano.clear();
+    }
 }
